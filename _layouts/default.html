@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <!-- Meta Tag -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- SEO -->
+    <meta name="description" content="">
+    <meta name="author" content="AMM Brasil">
+    <meta name="url" content="https://amm-brasil.github.io/i-encontro-sp/">
+    <meta name="copyright" content="AMM Brasil">
+    <meta name="robots" content="index,follow">
+
+    <title>Partiu Férias! #sqn</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ 'assets/css/style.css' | relative_url }}">
+
+</head>
+
+<body>
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand">Partiu Férias! <span style="font-weight: normal">#sqn</span></h3>
+            </div>
+        </header>
+
+        <main role="main" class="inner cover" id="principal">
+            <h1 class="cover-heading">Que nota você precisa tirar no exame para sair de férias?</h1>
+            <p>
+                <form onsubmit="event.preventDefault(); calcularExame(this.mediaAnual.value); return false;">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <input id="mediaAnual" name="mediaAnual" type="number" class="form-control" placeholder="Média anual"
+                                    min="0" max="100" autofocus required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-lg btn-primary">Partiu Férias?</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </p>
+            <p>
+                <a href="#" onclick="mostrarSecundario()" style="text-decoration: underline">Não sei minha média anual.</a>
+            </p>
+            <p>
+                <a href="#" onclick="mostrarCalculo()" style="text-decoration: underline">Como é feito o cálculo?</a>
+            </p>
+        </main>
+
+        <section class="inner cover d-none" id="secundario">
+            <h1 class="cover-heading">Que nota você precisa tirar no exame para sair de férias?</h1>
+            <p>Deixe as notas de <u><b>recuperação em branco</b></u> se você não tiver feito recuperação.</p>
+            <p>
+                <form onsubmit="event.preventDefault(); calcularMediaAnual(); return false;">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>1° Bim</label>
+                                <input id="Bim1" name="Bim1" type="number" class="form-control" min="0" max="100"
+                                    required value="0">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>2° Bim</label>
+                                <input id="Bim2" name="Bim2" type="number" class="form-control" min="0" max="100"
+                                    required value="0">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Rec 1°</label>
+                                <input id="Rec1" name="Rec1" type="number" class="form-control" min="0" max="100">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>3° Bim</label>
+                                <input id="Bim3" name="Bim3" type="number" class="form-control" min="0" max="100"
+                                    required value="0">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>4° Bim</label>
+                                <input id="Bim4" name="Bim4" type="number" class="form-control" min="0" max="100"
+                                    required value="0">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Rec 2°</label>
+                                <input id="Rec1" name="Rec1" type="number" class="form-control" min="0" max="100">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-lg btn-primary">Partiu Férias?</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </p>
+            <p>
+                <a href="#" onclick="mostrarPrincipal()" style="text-decoration: underline">Eu sei minha média anual.</a>
+            </p>
+            <p>
+                <a href="#" onclick="mostrarCalculo()" style="text-decoration: underline">Como é feito o cálculo?</a>
+            </p>
+        </section>
+
+        <section class="inner cover d-none" id="nota">
+            <h1 class="cover-heading">Você precisa...</h1>
+            <h2 id="nH2" style="font-weight: normal"></h2>
+            <h4 id="nH4" style="font-weight: normal"></h4>
+            <p>
+                <a href="#" onclick="mostrarPrincipal()" class="btn btn-primary">Voltar</a>
+            </p>
+            <p>
+                Cálculo realizado considerando Média Anual de <b><span id="calcMediaAnual"></span></b> pontos.
+            </p>
+        </section>
+
+        <section class="inner cover d-none" id="calculo">
+            <h1 class="cover-heading">Como é feito o cálculo?</h1>
+            <p>
+                Originalmente você precisa ter Média Anual (MA) igual ou superior a 60 pontos para passar de ano.
+                Porém <b>quando você realiza o Exame (EX)</b> a regra muda: a Média Final (MF) deve ser igual ou
+                superior a 50.
+            </p>
+            <p>
+                $MF = \frac{MA \times 6 + EX \times 4}{10}$
+            </p>
+            <p>
+                Portanto se a Média Final precisa ser maior que 50 usando a nota do Exame no cálculo, podemos inverter
+                a equação e torna-la uma inequação.
+            </p>
+            <p>
+                $EX \geq \frac{500 - MA \times 6}{4}$
+            </p>
+            <p>
+                <a href="#" class="btn btn-primary" onclick="mostrarPrincipal()">Voltar</a>
+            </p>
+        </section>
+
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                <p>Designed by <a href="https://natanaelsimoes.github.io">Natanael Simões</a>.</p>
+            </div>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+    <script>
+        function calcularMediaAnual() {
+            mSem1 = Math.round((parseInt($('#Bim1').val()) + parseInt($('#Bim2').val())) / 2);
+            mRSem1 = parseInt($('#Rec1').val()) ? parseInt($('#Rec1').val()) : 0;
+            mSem1 = mRSem1 > mSem1 ? mRSem1 : mSem1;
+            mSem2 = Math.round((parseInt($('#Bim4').val()) + parseInt($('#Bim3').val())) / 2);
+            mRSem2 = parseInt($('#Rec2').val()) ? parseInt($('#Rec2').val()) : 0;
+            mSem2 = mRSem2 > mSem2 ? mRSem2 : mSem2;
+            mediaAnual = Math.round((mSem1 + mSem2) / 2);
+            calcularExame(mediaAnual);
+        }
+        function calcularExame(mediaAnual) {
+            exame = (500 - (mediaAnual * 6)) / 4;
+            $('.cover').addClass('d-none');
+            $('#nota').removeClass('d-none');
+            $('#calcMediaAnual').html(mediaAnual);
+            if (mediaAnual >= 60) {
+                $('#nH2').html('Pegar sua mochila e ir embora').removeClass().addClass('text-success');
+                $('#nH4').html('Você já passou de ano ');
+                $('#nH4').append('<img style=\'height: 30px\' src=\'{{ "assets/img/check.png" | relative_url }}\'>');
+            } else {
+                if (exame > 100) {
+                    $('#nH2').html('Voltar ano que vem, companheiro').removeClass().addClass('text-danger');
+                    $('#nH4').html('Nem se tirasse 100 iria passar.');
+                } else {
+                    if (exame <= 100 && exame >= 79) {
+                        $('#nH2').html('Tirar ' + Math.round(exame) + ' pontos no Exame').removeClass().addClass('text-danger');
+                        $('#nH4').html('A situação não está muito favorável, melhor ir preparando o couro pra surra em casa.');
+                    } else if (exame < 79 && exame >= 58) {
+                        $('#nH2').html('Tirar ' + Math.round(exame) + ' pontos no Exame').removeClass().addClass('text-warning');
+                        $('#nH4').html('Nem tudo está perdido, com um pouco de esforço você chega lá.');
+                    } else {
+                        $('#nH2').html('Tirar ' + Math.round(exame) + ' pontos no Exame').removeClass().addClass('text-info');
+                        $('#nH4').html('De boa na lagoa.');
+                    }
+                }
+            }
+        }
+
+        function mostrarCalculo() {
+            $('.cover').addClass('d-none');
+            $('#calculo').removeClass('d-none');
+        }
+        function mostrarPrincipal() {
+            $('.cover').addClass('d-none');
+            $('#principal').removeClass('d-none');
+            $('#mediaAnual').focus();
+        }
+        function mostrarSecundario() {
+            $('.cover').addClass('d-none');
+            $('#secundario').removeClass('d-none');
+            $('#Bim1').focus();
+        }
+        $(function () {
+
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
